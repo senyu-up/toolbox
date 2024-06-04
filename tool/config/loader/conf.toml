@@ -1,0 +1,20 @@
+[mongodb]
+addr = "localhost:27017"
+[mysql]
+dsn =   "root:xxx@tcp(172.16.10.40:30006)/center_service??timeout=90s&collation=utf8mb4_unicode_ci"
+addr = "172.16.10.40:30006"
+dB = "center_service"
+password = "xxx"
+user = "root"
+[redisdb]
+addr = "localhost:6379"
+addrs = ["localhost:6379"]
+db = 1
+iscluster = true
+password = ""
+user = ""
+[slavemysql]
+addr = "172.16.10.40:30006"
+db = "center_service"
+password = "xxx"
+user = "root"

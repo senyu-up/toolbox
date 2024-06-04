@@ -1,0 +1,84 @@
+## 配置示例
+
+app:
+  name: "project-manager" #必须要一个名称
+  port: "8080" #监听端口
+  rpcPort: "8082" #监听端口
+  dev: true #是否开发环境 true 是开发环境 false 非开发环境
+  timeOut: 2000 #请求超时设置，毫秒
+  jaegerOn: true
+  etcdOn: true
+  devopsRpcServerHost: "172.16.10.50:53555" #运维部门rpc服务地址
+qwRobot:
+  webhook: https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=25e1862e-d324-4a27-b3a8-beb71dae1597
+  infoFreqLimit: 10/H
+  warnFreqLimit: 10/H
+  errorFreqLimit: 10/H
+  messageType: data-operation
+  prefix: do
+grpc: #请求其他微服务的配置
+  xxx1:
+    name: "xxx1"
+    addr: "127.0.0.1:8080"
+    timeount: 10
+  xxx2:
+    name: "xxx2"
+    addr: "127.0.0.1:8081"
+    timeout: 10
+#jaeger配置
+jaeger:
+  #采样器
+  sampler:
+    #固定采样率
+    type: "const"
+    #全采样
+    param: 1
+  #上报器
+  reporter:
+    #jaeger agent的访问地址
+    agentAddr: "127.0.0.1:6831"
+etcd:
+  addrs:
+    - "127.0.0.1:23791"
+nsq:
+  nsqd:
+    http: "127.0.0.1:4151"
+    tcp: "127.0.0.1:4150"
+  lookUpd:
+    http: "127.0.0.1:4161"
+    tcp: "127.0.0.1:4160"
+goCache:
+  defaultTtl: 120
+  cleanInterval: 60
+kafkaBrokers:
+  - "kafka1-svc.kafka.svc.cluster.local:9092"
+  - "kafka2-svc.kafka.svc.cluster.local:9092"
+  - "kafka3-svc.kafka.svc.cluster.local:9092"
+kafka:
+  timeout: 2
+delayQueueBrokers:
+  - "kafka1-svc.kafka.svc.cluster.local:9092"
+  - "kafka2-svc.kafka.svc.cluster.local:9092"
+  - "kafka3-svc.kafka.svc.cluster.local:9092"
+mysql:
+  addr: "172.16.10.40:30006"
+  user: "root"
+  password: "xxx"
+  dB: "center_service"
+slavemysql:
+  addr: "172.16.10.40:30006"
+  user: "root"
+  password: "xxx"
+  db: "center_service"
+redisdb:
+  addr: "localhost:6379"
+  user: ""
+  password: ""
+  db: 0
+  iscluster: true
+  addrs:
+    - "localhost:6379"
+#    - "localhost:6378"
+#    - "localhost:6377"
+mongodb:
+  addr: "localhost:27017"

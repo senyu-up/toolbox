@@ -1,0 +1,32 @@
+run_env: "local"
+
+mysql:
+  dsn: "root:xxx@tcp(172.16.10.40:30006)/center_service??timeout=90s&collation=utf8mb4_unicode_ci"
+  addr: "172.16.10.40:30006"
+  user: "root"
+  password: "xxx"
+  dB: "center_service"
+
+redisdb:
+  addr: "localhost:6379"
+  user: ""
+  password: ""
+  db: 0
+  iscluster: true
+  addrs:
+    - "localhost:6379"
+#    - "localhost:637
+#    - "localhost:6377"
+
+slavemysql:
+  addr: "172.16.10.40:30006"
+  user: "root"
+  password: "xxx"
+  db: "center_service"
+
+
+mongodb:
+  addr: "localhost:27017"
+
+
+

@@ -1,0 +1,83 @@
+version: '3'
+
+networks:
+  default:
+    external:
+      name: jaeger
+
+services:
+  # jaeger-collector 收集器
+  jaeger-collector:
+    image: jaegertracing/jaeger-collector
+    container_name: jaeger-collector
+    depends_on:
+      - elasticsearch
+    environment:
+      - SPAN_STORAGE_TYPE=elasticsearch
+      - ES_SERVER_URLS=http://jaeger-es:9200
+      - ES_USERNAME=elastic
+      - LOG_LEVEL=debug
+    ports:
+      - 9411:9411
+      - 14250:14250
+      - 14268:14268
+      - 14269:14269
+  # jaeger-query UI
+  jaeger-query:
+    image: jaegertracing/jaeger-query
+    container_name: jaeger-query
+    depends_on:
+      - elasticsearch
+    environment:
+      - SPAN_STORAGE_TYPE=elasticsearch
+      - ES_SERVER_URLS=http://jaeger-es:9200
+      - ES_USERNAME=elastic
+      - LOG_LEVEL=debug
+    ports:
+      - 16686:16686
+      - 16687:16687
+
+    # jaeger-agent 单独部署到各个需要采集的机器上
+  jaeger-agent:
+      image: jaegertracing/jaeger-agent
+      container_name: jaeger-agent
+      environment:
+        - REPORTER_GRPC_HOST_PORT=jaeger-collector:14250
+        - LOG_LEVEL=debug
+      ports:
+        - 5775:5775/udp
+        - 5778:5778
+        - 6831:6831/udp
+        - 6832:6832/udp
+        - 14271:14271
+
+    # elasticsearch jaeger存储后端 单独部署
+  elasticsearch:
+      image: docker.elastic.co/elasticsearch/elasticsearch:7.14.0
+      container_name: jaeger-es
+      environment:
+        - bootstrap.memory_lock=true
+        - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+        - discovery.type=single-node
+      ulimits:
+        memlock:
+          soft: -1
+          hard: -1
+      volumes:
+        - ./data:/usr/share/elasticsearch/data
+      ports:
+        - 9200:9200
+
+  # kibana 方便观察es中的数据
+  kibana:
+    image: kibana:7.14.0
+    container_name: jaeger-kibana
+    environment:
+      SERVER_NAME: kibana.local
+      ELASTICSEARCH_HOSTS: http://jaeger-es:9200
+      I18N_LOCALE: zh-CN
+    volumes:
+      - ./dockerConf/kibana:/usr/share/kibana/config
+    ports:
+      - 5601:5601
+

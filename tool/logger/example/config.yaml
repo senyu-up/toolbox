@@ -1,0 +1,35 @@
+logger:
+  appname: xh_text
+  calldepth: 3
+  defaultlog: console
+  console:
+    level: 5
+    colorful: true
+  file:
+    filename: file_log.txt
+    append: true
+    maxlines: 27
+    maxsize: 1024
+    daily: true
+    maxdays: 42
+    level: 5
+    permitmask: "0770"
+    loglevel: 12
+    maxsizecursize: 30
+    maxlinescurlines: 35
+    dailyopendate: 19
+    filenameonly: false
+    suffix: _test_log
+  conn:
+    reconnectonmsg: true
+    reconnect: false
+    net: tcp
+    addr: 127.0.0.1
+    level: 5
+    loglevel: 90
+  zap:
+    level: 5
+    colorful: true
+    loglevel: 5
+    output: zap_log.txt
+    callerskip: 3

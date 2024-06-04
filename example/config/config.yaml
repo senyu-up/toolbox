@@ -1,0 +1,170 @@
+app:
+  stage: "local"
+  name: "facade_app"
+  dev: true
+
+jwt:
+  tokenSecret: "UzI1NiIsInR5cC"
+  tokenExpiration: 300
+
+log:
+  callDepth: 4
+  defaultLog: "zap"
+  console:
+    level: "INFO"
+    colorful: true
+  zap:
+    level: "INFO"
+    colorful: false
+    output: "std"
+  file:
+    filename: "./app_file_log.txt"
+    append: true
+    daily: true
+    level: "INFO"
+    output: "./log.txt"
+
+
+
+fiber:
+  name: "facade_app"
+  addr: "0.0.0.0:5234"
+  caseSensitive: false
+  timeout: 30000
+  bodyLimit: 0
+  enablePrintRoutes: true
+  Pprof: false
+
+gin:
+  name: "facade_gin_app"
+  addr: "0.0.0.0:7777"
+  caseSensitive: false
+  timeout: 30000
+  bodyLimit: 0
+  enablePrintRoutes: true
+  Pprof: false
+
+grpcServer:
+  host: "0.0.0.0"
+  port: 53522
+  slowThreshold: 3000
+  timeout: 10000
+  requestLogOn: true
+
+grpcClient:
+  rpcTls: false
+  retryMax: 3
+  retryInterval: 2000
+  holdLiveTime: 10
+  slowThreshold: 3000
+  timeout: 10000
+  clientLogon: true
+  traceOn: true
+  serviceName: "%s:8080"
+
+health:
+  addr: "0.0.0.0"
+  port: 3524
+  pprof: false
+
+mysql:
+  pluralTable: true
+  maxOpenConn: 500
+  maxIdleConn: 10
+  maxIdleTime: 100
+  maxLifeTime: 3600
+  callDepth: 3
+  master:
+    addr: "127.0.0.1:3306"
+    user: "root"
+    password: "12345678"
+    db: "test"
+  slave:
+    - addr: "127.0.0.1:3306"
+      user: "root"
+      password: "12345678"
+      db: "test"
+
+
+mongo:
+    addr: "127.0.0.1:27017"
+    user: ""
+    password: ""
+    db: "test"
+
+redis:
+  addrs:
+    - "localhost:6379"
+#    - "localhost:6377"
+  user: ""
+  password: ""
+  db: 0
+  isCluster: false
+
+goCache:
+  defaultTtl: 300
+  cleanInterval: 600
+
+kafka:
+  level: 1
+  brokers:
+    - "127.0.0.1:9092"
+  timeout: 5
+  workers: 5
+  traceOn: true
+
+awskafka:
+  SASL:
+    Enable: true
+    Mechanism: "AWS_MSK_IAM"
+    Region: "us-west-2"
+    AccessId: "AKIAXYISDYYBBS"
+    SecretKey: "/F27UkHBbkq3S"
+  level: 1
+  brokers:
+    - "b-2-public.testkafkaiam.kafka.us-west-2.amazonaws.com:9198"
+    - "b-1-public.testkafkaiam.kafka.us-west-2.amazonaws.com:9198"
+  timeout: 10
+  workers: 5
+  traceOn: true
+
+awsS3:
+  awsAccessId: "xxx"
+  awsAccessKey: "fkljfalkfj"
+  regin: "xxx"
+  s3:
+    - region: "cn-north-1"
+      bucket: VWHCgWY
+      path: "/tests/pic/"
+      expire: 84600
+      host: "http://cdn.test.com"
+    - region: "cn-north-1"
+      bucket: oGELg
+      path: "http://cdn.test.com"
+      expire: 7200
+
+email:
+  awsAccessId: "xxx"
+  awsAccessKey: "fkljfalkfj"
+  regin: "xxx"
+
+trace:
+  ServerLogOn: true
+  jaeger:
+    jaegerOn: true
+    SamplerFreq: 1.0
+    CollectorEndpoint: "127.0.0.1:6831"
+
+wework:
+  corpId: "wwef87055fdc2e7c4"
+  secret: "LBamk7d3XPiAMqoULNxSYEyi0aRRCVenjhVzM2fs1L"
+  agentId: "1000008"
+  refreshInterval: 7000
+  debug: true
+
+qwRobot:
+  webhook: "http://qyapi.weixin.com/hook/dfsalfksjaf"
+  infoFreqLimit: "10/m"
+  errorFreqLimit: "20/m"
+  messageType: "authorize"
+  prefix: "qwrobot_"
